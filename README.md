@@ -2,9 +2,20 @@
 
 A modern library management application built with Next.js, React, TypeScript, and Tailwind CSS using shadcn/ui components.
 
+## Installation
+
+```bash
+# Install dependencies
+pnpm install
+
+# Add shadcn components (if needed)
+pnpm dlx shadcn@latest add button input card
+```
+
 ## Overview
 
 This application allows users to manage a collection of books with features including:
+
 - **Search**: Filter books by title or author
 - **Add**: Add new books with title and author
 - **Edit**: Modify existing book information
@@ -22,6 +33,38 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Project Structure
 
+```text
+.
+├── app/
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── ui/
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   └── input.tsx
+│   └── library-button.tsx
+├── lib/
+│   └── utils.ts
+├── public/
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── components.json
+├── eslint.config.mjs
+├── next.config.ts
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── postcss.config.mjs
+├── README.md
+└── tsconfig.json
+```
+
 ### File: `app/page.tsx`
 
 This is the main page component that manages the entire application state and UI.
@@ -29,6 +72,7 @@ This is the main page component that manages the entire application state and UI
 #### Key Components:
 
 **State Management:**
+
 - `query`: Stores the search input value
 - `title` & `author`: Temporary states for the "Add Book" form
 - `books`: Array of all books in the library
@@ -36,49 +80,56 @@ This is the main page component that manages the entire application state and UI
 - `editTitle` & `editAuthor`: Stores the edited values temporarily
 
 **Data Structure:**
+
 ```typescript
 type Book = {
-  id: number;          // Unique numeric ID using Date.now() (millisecond timestamp)
-  title: string;       // Book title
-  author: string;      // Author name
+  id: number; // Unique numeric ID using Date.now() (millisecond timestamp)
+  title: string; // Book title
+  author: string; // Author name
 };
 ```
 
 #### Key Functions:
 
 **1. `filteredBooks`**
+
 - Computed value that filters books based on search query
 - Searches both title and author fields (case-insensitive)
 - Returns all books if search query is empty
 - Recalculates on every render when `query` or `books` change
 
 **2. `handleAdd()`**
+
 - Validates that both title and author are not empty
 - Uses `Date.now()` to generate a unique numeric ID based on the current timestamp in milliseconds
 - Prepends new book to the books array
 - Clears the input fields after adding
 
 **3. `handleRemove(id)`**
+
 - Filters out the book with matching numeric ID
 - Updates the books array
 
 **4. `handleEdit(book)`**
+
 - Sets the book ID as currently editing
 - Populates edit form fields with current book data
 
 **5. `handleSaveEdit(id)`**
+
 - Validates edited title and author are not empty
 - Updates the specific book in the array with new values using the numeric ID
 - Clears editing state and form fields
 
 **6. `handleCancelEdit()`**
+
 - Exits edit mode without saving changes
 - Clears all edit-related state
 
 #### UI Structure:
 
 1. **Header**: Displays the application title
-2. **Input Section**: 
+2. **Input Section**:
    - Search bar for filtering books
    - Form with title and author inputs
    - Add Book button (blue)
@@ -97,15 +148,15 @@ A reusable button component that applies consistent styling based on the button 
 
 ```typescript
 type LibraryButtonProps = {
-  onClick: () => void;           // Callback function when button is clicked
-  variant: "add" | "remove" | "edit";  // Button type (determines color)
-  children: React.ReactNode;     // Button label/content
+  onClick: () => void; // Callback function when button is clicked
+  variant: "add" | "remove" | "edit"; // Button type (determines color)
+  children: React.ReactNode; // Button label/content
 };
 ```
 
 #### Variants:
 
-1. **`add` (Blue)**: 
+1. **`add` (Blue)**:
    - Background: `bg-blue-600`
    - Hover: `hover:bg-blue-700`
    - Used for: Add Book, Save buttons
@@ -146,40 +197,35 @@ type LibraryButtonProps = {
 ## How It Works
 
 ### Adding a Book:
+
 1. User enters title and author in the input fields
 2. Clicks "Add Book" button
 3. `handleAdd()` validates and creates new book entry
 4. Book is prepended to the list
 
 ### Searching Books:
+
 1. User types in the search field
 2. `filteredBooks` automatically updates based on query
 3. List re-renders showing only matching books
 
 ### Editing a Book:
+
 1. User clicks "Edit" button on a book card
 2. Card switches to edit mode with input fields pre-filled
 3. User modifies title and/or author
 4. Clicks "Save" to confirm or "Cancel" to discard changes
 
 ### Removing a Book:
+
 1. User clicks "Remove" button
 2. `handleRemove()` filters out the book
 3. List updates immediately
 
-## Installation
-
-```bash
-# Install dependencies
-pnpm install
-
-# Add shadcn components (if needed)
-pnpm dlx shadcn@latest add button input card
-```
-
 ## Development
 
 The app uses React hooks for state management:
+
 - `useState`: For local state (input values, editing mode)
 
 The component is marked as `"use client"` to enable React hooks in Next.js App Router.
