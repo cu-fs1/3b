@@ -2,6 +2,12 @@
 
 A modern library management application built with Next.js, React, TypeScript, and Tailwind CSS using shadcn/ui components.
 
+## Starting the Project
+
+Students should first follow the experiment guide to proceed with the project
+
+- [Experiment 3 Guide](https://github.com/cu-fs1#experiment-3)
+
 ## Installation
 
 ```bash
